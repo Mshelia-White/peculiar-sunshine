@@ -56,7 +56,7 @@ const projects = [
     number: "01",
     name: "Winnie’s School of Excellence",
     label: "Scale · Content systems · Community",
-    logo: "/brands/wse-logo.jpg",
+    logo: "/brands/wse-logo.PNG",
     copy: "Social media management, content strategy and community coordination across seven connected digital touchpoints.",
     metrics: [["586K+", "subscriber ecosystem"], ["7", "digital channels"], ["1.8M", "public content anchor"]],
   },
@@ -64,7 +64,7 @@ const projects = [
     number: "02",
     name: "Nova Tribe × Nova Missions",
     label: "Organic growth · Paid acquisition",
-    logo: "/brands/nova-logo.jpg",
+    logo: "/brands/nova-missions.PNG",
     copy: "Content planning, community, audience intelligence and conversion-focused paid distribution for a growing brand ecosystem.",
     metrics: [["34.6K", "30-day views"], ["31.8K", "30-day views"], ["₦39.11", "cost per click"]],
   },
@@ -72,7 +72,7 @@ const projects = [
     number: "03",
     name: "Coach AMARAK",
     label: "Systems · Reliability · Execution",
-    logo: "/brands/coach-logo.jpg",
+    logo: "/brands/amarak.PNG",
     copy: "A cross-platform operating rhythm maintained every morning for one hundred consecutive days.",
     metrics: [["100", "consecutive days"], ["7:00", "every morning"], ["Multi", "platform system"]],
   },
@@ -89,15 +89,17 @@ const projects = [
 const tools = ["Meta Ads Manager", "Meta Business Suite", "Google Sheets", "Canva", "ManyChat", "WhatsApp Business", "Platform Insights"];
 
 const brandExperience = [
-  { name: "Winnie’s School of Excellence", logo: "/brands/wse-logo.jpg", mark: "WSE" },
-  { name: "Nova", logo: "/brands/nova-logo.jpg", mark: "N" },
-  { name: "Coach AMARAK", logo: "/brands/coach-logo.jpg", mark: "CA" },
-  { name: "KRD Autos", logo: "/brands/krd-logo.jpg", mark: "KRD" },
-  { name: "Agape Haven", logo: null, mark: "AH" },
-  { name: "Shop With Pee Sunshine", logo: null, mark: "PS." },
-  { name: "QPK Magical Pad", logo: null, mark: "QPK" },
-  { name: "Teefly Kitchen", logo: null, mark: "TK" },
-  { name: "Confidential Brand", logo: null, mark: "◎" },
+  { id: "wse", logo: "/brands/wse-logo.PNG" },
+  { id: "nova-missions", logo: "/brands/nova-missions.PNG" },
+  { id: "amarak", logo: "/brands/amarak.PNG" },
+  { id: "krd", logo: "/brands/krd-logo.jpg" },
+  { id: "img-2224", logo: "/brands/IMG_2224.PNG" },
+  { id: "img-2225", logo: "/brands/IMG_2225.PNG" },
+  { id: "img-2226", logo: "/brands/IMG_2226.PNG" },
+  { id: "nova-tribe", logo: "/brands/nova-tribe.PNG" },
+  { id: "wse-jpg", logo: "/brands/wse-logo.jpg" },
+  { id: "nova-jpg", logo: "/brands/nova-logo.jpg" },
+  { id: "coach-jpg", logo: "/brands/coach-logo.jpg" },
 ];
 
 const process = [
@@ -218,16 +220,9 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="hero-visual" aria-label="Portrait placeholder for Peculiar Sunshine">
+          <div className="hero-visual" aria-label="Portrait of Peculiar Sunshine">
             <div className="portrait-panel">
-              <div className="portrait-grid" />
-              <div className="portrait-orbit orbit-one" />
-              <div className="portrait-orbit orbit-two" />
-              <span className="portrait-monogram">PS</span>
-              <div className="portrait-caption">
-                <span>Portrait placement</span>
-                <small>Final image to be supplied</small>
-              </div>
+              <img src="/header.png" alt="Peculiar Sunshine" className="hero-image" />
             </div>
             <div className="visual-index"><span>01</span><i /></div>
           </div>
@@ -246,13 +241,8 @@ export default function Home() {
           <div className="brand-marquee-window">
             <div className="brand-track">
               {[...brandExperience, ...brandExperience].map((brand, index) => (
-                <div className="brand-chip" key={`${brand.name}-${index}`} aria-hidden={index >= brandExperience.length || undefined}>
-                  {brand.logo ? (
-                    <img src={brand.logo} alt={index < brandExperience.length ? `${brand.name} logo` : ""} />
-                  ) : (
-                    <span className="brand-placeholder" aria-label={index < brandExperience.length ? `${brand.name} logo placeholder` : undefined}>{brand.mark}</span>
-                  )}
-                  <small>{brand.name}</small>
+                <div className="brand-chip" key={`${brand.id}-${index}`} aria-hidden={index >= brandExperience.length || undefined}>
+                  <img src={brand.logo} alt="Brand logo" />
                 </div>
               ))}
             </div>
