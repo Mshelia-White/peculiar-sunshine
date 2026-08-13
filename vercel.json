@@ -1,6 +1,0 @@
-{
-  "framework": null,
-  "buildCommand": "bash scripts/build-verified.sh",
-  "outputDirectory": "dist",
-  "installCommand": "npm install"
-}
