@@ -11,6 +11,23 @@ const navItems = [
   ["06", "contact", "Contact"],
 ] as const;
 
+const heroResults = [
+  { value: "586K+", label: "Subscriber ecosystem" },
+  { value: "1.8M", label: "Standout long-form views" },
+  { value: "196K+", label: "Short-form views" },
+  { value: "3 years", label: "Strategy & execution" },
+];
+
+const trustedBrands = [
+  { name: "Winnie’s School of Excellence", logo: "/brands/winnie school excellent.svg" },
+  { name: "Nova Missions", logo: "/brands/nova-missions.PNG" },
+  { name: "Coach AMARAK", logo: "/brands/amarak.PNG" },
+  { name: "KRD Autos", logo: "/brands/krd.png" },
+  { name: "Genowax", logo: "/brands/genowax.png" },
+  { name: "Agape Heaven", logo: "/brands/agape-heaven.png" },
+  { name: "OPK", logo: "/brands/opk.png" },
+];
+
 const metrics = [
   { value: "586K+", label: "Subscriber ecosystem", note: "WSE public scale" },
   { value: "1.8M", label: "Standout long-form views", note: "Public content anchor" },
@@ -56,7 +73,7 @@ const projects = [
     number: "01",
     name: "Winnie’s School of Excellence",
     label: "Scale · Content systems · Community",
-    logo: "/brands/wse-logo.PNG",
+    logo: "/brands/winnie school excellent.svg",
     copy: "Social media management, content strategy and community coordination across seven connected digital touchpoints.",
     metrics: [["586K+", "subscriber ecosystem"], ["7", "digital channels"], ["1.8M", "public content anchor"]],
   },
@@ -80,27 +97,13 @@ const projects = [
     number: "04",
     name: "KRD Autos & General Merchandise",
     label: "Foundation · Direction · Early traction",
-    logo: "/brands/krd-logo.jpg",
+    logo: "/brands/krd.png",
     copy: "Positioning, social strategy, content planning and campaign direction for a brand starting from the ground up.",
     metrics: [["0 → 32", "early community"], ["1.7K", "30-day views"], ["16", "planned pieces"]],
   },
 ];
 
 const tools = ["Meta Ads Manager", "Meta Business Suite", "Google Sheets", "Canva", "ManyChat", "WhatsApp Business", "Platform Insights"];
-
-const brandExperience = [
-  { id: "wse", logo: "/brands/wse-logo.PNG" },
-  { id: "nova-missions", logo: "/brands/nova-missions.PNG" },
-  { id: "amarak", logo: "/brands/amarak.PNG" },
-  { id: "krd", logo: "/brands/krd-logo.jpg" },
-  { id: "img-2224", logo: "/brands/IMG_2224.PNG" },
-  { id: "img-2225", logo: "/brands/IMG_2225.PNG" },
-  { id: "img-2226", logo: "/brands/IMG_2226.PNG" },
-  { id: "nova-tribe", logo: "/brands/nova-tribe.PNG" },
-  { id: "wse-jpg", logo: "/brands/wse-logo.jpg" },
-  { id: "nova-jpg", logo: "/brands/nova-logo.jpg" },
-  { id: "coach-jpg", logo: "/brands/coach-logo.jpg" },
-];
 
 const process = [
   ["Outcome", "What does the business need to achieve?"],
@@ -111,9 +114,19 @@ const process = [
   ["Learning", "What did the performance teach us?"],
 ];
 
+const marqueeSkills = [
+  "SOCIAL STRATEGY",
+  "CONTENT DIRECTION",
+  "PAID ACQUISITION",
+  "COMMUNITY GROWTH",
+  "AUTOMATION",
+  "ANALYTICS",
+];
+
 export default function Home() {
   const [active, setActive] = useState("home");
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
     const revealObserver = new IntersectionObserver(
@@ -122,7 +135,7 @@ export default function Home() {
           if (entry.isIntersecting) entry.target.classList.add("is-visible");
         });
       },
-      { threshold: 0.16 },
+      { threshold: 0.14 },
     );
 
     document.querySelectorAll("[data-reveal]").forEach((element) =>
@@ -136,7 +149,7 @@ export default function Home() {
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
         if (visible?.target.id) setActive(visible.target.id);
       },
-      { threshold: [0.25, 0.5, 0.75] },
+      { threshold: [0.2, 0.45, 0.7] },
     );
 
     document.querySelectorAll("main section[id]").forEach((section) =>
@@ -147,12 +160,19 @@ export default function Home() {
       document.documentElement.style.setProperty("--pointer-x", `${event.clientX}px`);
       document.documentElement.style.setProperty("--pointer-y", `${event.clientY}px`);
     };
+
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+
     window.addEventListener("pointermove", updatePointer, { passive: true });
+    window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => {
       revealObserver.disconnect();
       sectionObserver.disconnect();
       window.removeEventListener("pointermove", updatePointer);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
@@ -161,6 +181,8 @@ export default function Home() {
   return (
     <>
       <div className="pointer-light" aria-hidden="true" />
+      
+      {/* HEADER */}
       <header className="site-header">
         <a className="wordmark" href="#home" onClick={closeMenu} aria-label="Peculiar Sunshine home">
           <span className="wordmark-mark">PS</span>
@@ -176,6 +198,7 @@ export default function Home() {
         </nav>
 
         <a className="header-cta" href="#contact">Start a conversation <span>↗</span></a>
+        
         <button
           className="menu-button"
           type="button"
@@ -188,6 +211,7 @@ export default function Home() {
         </button>
       </header>
 
+      {/* SIDE NAVIGATION RAIL */}
       <aside className="section-rail" aria-label="Page progress">
         {navItems.map(([number, id, label]) => (
           <a key={id} href={`#${id}`} className={active === id ? "active" : ""} aria-label={`Go to ${label}`}>
@@ -198,57 +222,87 @@ export default function Home() {
       </aside>
 
       <main>
-        <section className="hero snap-section" id="home">
-          <div className="hero-copy">
-            <p className="eyebrow hero-kicker" data-reveal>Social Media &amp; Growth Strategist</p>
-            <h1 className="hero-title" aria-label="Clear strategy. Better direction. Growth you can measure.">
-              <span>Clear strategy.</span>
-              <span>Better direction.</span>
-              <span className="accent-line">Growth you can measure.</span>
-            </h1>
-            <p className="hero-intro" data-reveal>
-              I help brands strengthen their online presence, reach the right people and turn attention into meaningful action.
-            </p>
-            <div className="hero-actions" data-reveal>
-              <a className="button button-light" href="#work">View selected work <span>↓</span></a>
-              <a className="text-link" href="#expertise">Explore my expertise <span>↗</span></a>
+        {/* EDITORIAL HERO SECTION */}
+        <section className="hero-wrapper snap-section" id="home">
+          <div className="hero-editorial-frame">
+            {/* Oversized Backdrop Word "GROWTH" */}
+            <div 
+              className="hero-backdrop-word" 
+              aria-hidden="true"
+              style={{ transform: `translateX(-50%) translateY(${Math.min(scrollY * 0.12, 50)}px)` }}
+            >
+              <span>GROWTH</span>
             </div>
-            <div className="hero-meta" data-reveal>
-              <span>Based in Nigeria</span>
-              <span>Available worldwide</span>
-              <span>3 years of practice</span>
+
+            {/* Central Portrait Integration */}
+            <div className="hero-portrait-stage">
+              <div 
+                className="hero-portrait-container"
+                style={{ transform: `translateY(${Math.min(scrollY * 0.2, 80)}px)` }}
+              >
+                <img 
+                  src="/header.png" 
+                  alt="Peculiar Sunshine - Social Media Strategist | Brand Strategist | Content Marketing" 
+                />
+              </div>
             </div>
-          </div>
 
-          <div className="hero-visual" aria-label="Portrait of Peculiar Sunshine">
-            <div className="portrait-panel">
-              <img src="/header.png" alt="Peculiar Sunshine" className="hero-image" />
-            </div>
-            <div className="visual-index"><span>01</span><i /></div>
-          </div>
+            {/* Middle Grid: Left Copy | Center Spacer | Right Trust Area */}
+            <div className="hero-mid-grid">
+              <div className="hero-left-content">
+                <p className="hero-eyebrow">SOCIAL MEDIA STRATEGIST | BRAND STRATEGIST | CONTENT MARKETING</p>
+                <p className="hero-support-copy">
+                  Your audience is already online. I help you reach them with clear strategy, stronger content, and campaigns built to turn attention into action.
+                </p>
+                <a className="hero-cta-btn" href="#work">
+                  SEE THE RESULTS <span>↗</span>
+                </a>
+              </div>
 
-          <a className="scroll-cue" href="#overview" aria-label="Scroll to overview">
-            <span>Scroll to explore</span>
-            <i><b /></i>
-          </a>
-        </section>
+              <div className="hero-center-spacer" aria-hidden="true" />
 
-        <section className="brand-marquee" aria-label="Selected brand experience">
-          <div className="brand-marquee-label">
-            <span>Selected brand experience</span>
-            <span>Brands, businesses &amp; communities</span>
-          </div>
-          <div className="brand-marquee-window">
-            <div className="brand-track">
-              {[...brandExperience, ...brandExperience].map((brand, index) => (
-                <div className="brand-chip" key={`${brand.id}-${index}`} aria-hidden={index >= brandExperience.length || undefined}>
-                  <img src={brand.logo} alt="Brand logo" />
+              <div className="hero-right-trust">
+                <span className="hero-trust-label">TRUSTED ACROSS</span>
+                <div className="hero-trust-logos">
+                  {trustedBrands.map((brand) => (
+                    <div className="hero-trust-chip" key={brand.name} title={brand.name}>
+                      <img src={brand.logo} alt={brand.name} />
+                    </div>
+                  ))}
                 </div>
-              ))}
+              </div>
+            </div>
+
+            {/* Translucent Glass Results Panel at the Bottom */}
+            <div className="hero-glass-results" aria-label="Verified Performance Metrics">
+              <div className="hero-results-grid">
+                {heroResults.map((result) => (
+                  <div className="hero-result-item" key={result.label}>
+                    <span className="hero-result-num">{result.value}</span>
+                    <span className="hero-result-label">{result.label}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </section>
 
+        {/* CONTINUOUS HORIZONTAL POST-HERO MARQUEE */}
+        <section className="post-hero-marquee" aria-label="Core Capabilities Marquee">
+          <div className="marquee-track">
+            {[0, 1, 2, 3].map((repeatIndex) => (
+              <div className="marquee-chunk" key={repeatIndex} aria-hidden={repeatIndex > 0 || undefined}>
+                {marqueeSkills.map((skill) => (
+                  <span key={`${repeatIndex}-${skill}`}>
+                    {skill} <b>◆</b>
+                  </span>
+                ))}
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* OVERVIEW / PROOF SECTION */}
         <section className="overview snap-section" id="overview">
           <div className="section-heading" data-reveal>
             <p className="eyebrow dark">A practical record of growth</p>
@@ -281,6 +335,7 @@ export default function Home() {
           </div>
         </section>
 
+        {/* EXPERTISE SECTION */}
         <section className="expertise snap-section" id="expertise">
           <div className="expertise-intro">
             <div className="sticky-heading" data-reveal>
@@ -305,6 +360,7 @@ export default function Home() {
           </div>
         </section>
 
+        {/* WORK SECTION */}
         <section className="work snap-section" id="work">
           <div className="work-heading" data-reveal>
             <div>
@@ -340,6 +396,7 @@ export default function Home() {
           <p className="integrity-note">Public channel-level figures are shown as scale context. Individual attribution is limited to work connected to Peculiar’s documented management and execution periods.</p>
         </section>
 
+        {/* METHOD SECTION */}
         <section className="method snap-section" id="method">
           <div className="method-header" data-reveal>
             <p className="eyebrow">A practical way of working</p>
@@ -377,6 +434,7 @@ export default function Home() {
           </div>
         </section>
 
+        {/* CONTACT SECTION */}
         <section className="contact snap-section" id="contact">
           <div className="contact-top" data-reveal>
             <p className="eyebrow">Available worldwide</p>
@@ -391,7 +449,7 @@ export default function Home() {
             </div>
           </div>
           <div className="contact-footer">
-            <div className="footer-mark"><span>PS</span><p>Peculiar Sunshine<br /><small>Social Media &amp; Growth Strategist</small></p></div>
+            <div className="footer-mark"><span>PS</span><p>Peculiar Sunshine<br /><small>Social Media Strategist | Brand Strategist | Content Marketing</small></p></div>
             <div className="footer-status"><i /> Open to full-time, contract and consulting work</div>
             <a href="#home">Back to top ↑</a>
           </div>
