@@ -20,12 +20,12 @@ const heroResults = [
 
 const trustedBrands = [
   { name: "Winnie’s School of Excellence", logo: "/brands/winnie school excellent.svg" },
-  { name: "Nova Missions", logo: "/brands/nova-missions.PNG" },
+  { name: "OPK MagicalPad", logo: "/brands/opk.png" },
+  { name: "Nova Tribe × Nova Missions", logo: "/brands/nova-missions.PNG" },
   { name: "Coach AMARAK", logo: "/brands/amarak.PNG" },
   { name: "KRD Autos", logo: "/brands/krd.png" },
+  { name: "Agape Haven", logo: "/brands/agape-heaven.png" },
   { name: "Genowax", logo: "/brands/genowax.png" },
-  { name: "Agape Heaven", logo: "/brands/agape-heaven.png" },
-  { name: "OPK", logo: "/brands/opk.png" },
 ];
 
 const metrics = [
@@ -72,34 +72,74 @@ const projects = [
   {
     number: "01",
     name: "Winnie’s School of Excellence",
-    label: "Scale · Content systems · Community",
+    label: "Scale · Content Systems · Community",
     logo: "/brands/winnie school excellent.svg",
-    copy: "Social media management, content strategy and community coordination across seven connected digital touchpoints.",
-    metrics: [["586K+", "subscriber ecosystem"], ["7", "digital channels"], ["1.8M", "public content anchor"]],
+    copy: "Managed and coordinated a high-volume content ecosystem, turning strategy into a reliable publishing system that strengthened audience engagement, expanded content reach, and kept a large learning community connected across platforms.",
+    metrics: [
+      ["586K+", "connected subscriber ecosystem"],
+      ["1.8M", "standout long-form views"],
+      ["196K+", "high-performing short-form views"],
+    ],
   },
   {
     number: "02",
-    name: "Nova Tribe × Nova Missions",
-    label: "Organic growth · Paid acquisition",
-    logo: "/brands/nova-missions.PNG",
-    copy: "Content planning, community, audience intelligence and conversion-focused paid distribution for a growing brand ecosystem.",
-    metrics: [["34.6K", "30-day views"], ["31.8K", "30-day views"], ["₦39.11", "cost per click"]],
+    name: "OPK MagicalPad",
+    label: "Brand Building · Product Education · Sales",
+    logo: "/brands/opk.png",
+    copy: "Built the Instagram presence from scratch, combining fertility education, product-focused storytelling, graphic design, and community management to earn customer trust, generate enquiries, and support sales within Nigeria and internationally.",
+    metrics: [
+      ["9K+", "Instagram brand community"],
+      ["₦50M+", "generated in product sales"],
+      ["≈250K", "estimated content reach"],
+    ],
   },
   {
     number: "03",
-    name: "Coach AMARAK",
-    label: "Systems · Reliability · Execution",
-    logo: "/brands/amarak.PNG",
-    copy: "A cross-platform operating rhythm maintained every morning for one hundred consecutive days.",
-    metrics: [["100", "consecutive days"], ["7:00", "every morning"], ["Multi", "platform system"]],
+    name: "Nova Tribe × Nova Missions",
+    label: "Audience Intelligence · Paid Growth · Conversion",
+    logo: "/brands/nova-missions.PNG",
+    copy: "Developed audience-led content plans, community insights, and conversion-focused campaigns that expanded the brands’ visibility, reached new audiences, and moved people from discovery towards meaningful action.",
+    metrics: [
+      ["≈1.2M", "total audience reach"],
+      ["66.4K", "combined 30-day views"],
+      ["Paid", "conversion-led distribution"],
+    ],
   },
   {
     number: "04",
+    name: "Coach AMARAK",
+    label: "Authority · Personal Brand · Audience Connection",
+    logo: "/brands/amarak.PNG",
+    copy: "Translated her expertise as a leadership coach, mentor, author, and speaker into clear, relatable content that strengthened her professional authority, communicated her sessions effectively, and kept her audience consistently connected.",
+    metrics: [
+      ["3.4K+", "established brand community"],
+      ["Clear", "leadership sessions communicated"],
+      ["Daily", "consistent authority-led presence"],
+    ],
+  },
+  {
+    number: "05",
     name: "KRD Autos & General Merchandise",
-    label: "Foundation · Direction · Early traction",
+    label: "Foundation · Positioning · Market Visibility",
     logo: "/brands/krd.png",
-    copy: "Positioning, social strategy, content planning and campaign direction for a brand starting from the ground up.",
-    metrics: [["0 → 32", "early community"], ["1.7K", "30-day views"], ["16", "planned pieces"]],
+    copy: "Created the strategic foundation for an emerging brand through clear positioning, social media strategy, content planning, and campaign direction designed to establish credibility and turn early audience attention into genuine enquiries.",
+    metrics: [
+      ["1.7K+", "content views in 30 days"],
+      ["16", "strategic content rollout"],
+      ["Direct", "enquiry-focused campaign direction"],
+    ],
+  },
+  {
+    number: "06",
+    name: "Agape Haven",
+    label: "Content Direction · Community · Visibility",
+    logo: "/brands/agape-heaven.png",
+    copy: "Developed Agape Haven’s content direction and transformed church services, programmes, and community moments into consistent digital stories. Coordinated the content team, strengthened community engagement, and supported organic and paid growth initiatives.",
+    metrics: [
+      ["1.5K+", "organic views in 30 days"],
+      ["381+", "views on individual content"],
+      ["Growth", "organic & paid growth system"],
+    ],
   },
 ];
 
@@ -116,7 +156,8 @@ const process = [
 
 const marqueeSkills = [
   "SOCIAL STRATEGY",
-  "CONTENT DIRECTION",
+  "BRAND STRATEGY",
+  "CONTENT MARKETING",
   "PAID ACQUISITION",
   "COMMUNITY GROWTH",
   "AUTOMATION",
@@ -242,15 +283,23 @@ export default function Home() {
               >
                 <img 
                   src="/header.png" 
-                  alt="Peculiar Sunshine - Social Media Strategist | Brand Strategist | Content Marketing" 
+                  alt="Peculiar Sunshine - Social Media & Brand Strategist | Content Marketing Specialist" 
                 />
               </div>
             </div>
 
-            {/* Middle Grid: Left Copy | Center Spacer | Right Trust Area */}
+            {/* Middle Grid: Left Title Card & Copy | Center Spacer | Right Trust Area */}
             <div className="hero-mid-grid">
               <div className="hero-left-content">
-                <p className="hero-eyebrow">SOCIAL MEDIA STRATEGIST | BRAND STRATEGIST | CONTENT MARKETING</p>
+                {/* High-Contrast Core Expertise Title Card */}
+                <div className="hero-title-card" aria-label="Core Expertise">
+                  <span className="hero-title-badge">CORE EXPERTISE</span>
+                  <div className="hero-title-lines">
+                    <span className="hero-title-line line-1">SOCIAL MEDIA &amp; BRAND STRATEGIST</span>
+                    <span className="hero-title-line line-2">CONTENT MARKETING SPECIALIST</span>
+                  </div>
+                </div>
+
                 <p className="hero-support-copy">
                   Your audience is already online. I help you reach them with clear strategy, stronger content, and campaigns built to turn attention into action.
                 </p>
@@ -311,10 +360,10 @@ export default function Home() {
 
           <div className="overview-copy" data-reveal>
             <p>
-              For the past three years, I’ve helped education brands, personal brands, communities and growing businesses build clearer, more useful digital systems.
+              For the past three years, I’ve helped businesses and personal brands strengthen their digital presence, connect with the right audiences, and turn online visibility into measurable business growth.
             </p>
             <p>
-              My work connects social strategy, content direction, paid media and performance—so every action has a reason, and every result informs what comes next.
+              I bring brand strategy, social media, content marketing, and paid campaigns together—so every move has purpose, every campaign reaches the right people, and every result drives the next stage of growth.
             </p>
           </div>
 
@@ -367,7 +416,7 @@ export default function Home() {
               <p className="eyebrow dark">Selected work</p>
               <h2>The work,<br /><em>in context.</em></h2>
             </div>
-            <p>Different stages need different answers. These projects show scale, consistency, acquisition and early-stage brand building.</p>
+            <p>Different stages need different answers. These projects show scale, consistency, acquisition, sales, and community building.</p>
           </div>
 
           <div className="project-stack">
@@ -426,10 +475,10 @@ export default function Home() {
 
           <div className="skill-line" aria-label="Core skills">
             <div>
-              <span>Social strategy</span><b>◆</b><span>Content direction</span><b>◆</b><span>Paid acquisition</span><b>◆</b><span>Automation</span><b>◆</b><span>Analytics</span><b>◆</b>
+              <span>Social strategy</span><b>◆</b><span>Brand strategy</span><b>◆</b><span>Content marketing</span><b>◆</b><span>Paid acquisition</span><b>◆</b><span>Automation</span><b>◆</b><span>Analytics</span><b>◆</b>
             </div>
             <div aria-hidden="true">
-              <span>Social strategy</span><b>◆</b><span>Content direction</span><b>◆</b><span>Paid acquisition</span><b>◆</b><span>Automation</span><b>◆</b><span>Analytics</span><b>◆</b>
+              <span>Social strategy</span><b>◆</b><span>Brand strategy</span><b>◆</b><span>Content marketing</span><b>◆</b><span>Paid acquisition</span><b>◆</b><span>Automation</span><b>◆</b><span>Analytics</span><b>◆</b>
             </div>
           </div>
         </section>
@@ -449,7 +498,7 @@ export default function Home() {
             </div>
           </div>
           <div className="contact-footer">
-            <div className="footer-mark"><span>PS</span><p>Peculiar Sunshine<br /><small>Social Media Strategist | Brand Strategist | Content Marketing</small></p></div>
+            <div className="footer-mark"><span>PS</span><p>Peculiar Sunshine<br /><small>Social Media &amp; Brand Strategist · Content Marketing Specialist</small></p></div>
             <div className="footer-status"><i /> Open to full-time, contract and consulting work</div>
             <a href="#home">Back to top ↑</a>
           </div>
