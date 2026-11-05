@@ -1159,3 +1159,194 @@
   .gc-load { opacity: 1; transform: none; }
   .gc-marquee-track { animation: none; }
 }
+
+/* ==========================================================================
+   SIGN-UP FORM (modal on desktop, bottom sheet on phones)
+   ========================================================================== */
+.gc button.gc-btn { border: 0; cursor: pointer; font-family: var(--sans); }
+.gc-btn.is-joined { background: #2F7D57; box-shadow: 0 14px 30px rgba(47, 125, 87, 0.25); }
+.gc-btn.is-joined:hover { background: #276B4A; box-shadow: 0 18px 36px rgba(47, 125, 87, 0.3); }
+.gc-check {
+  width: 18px;
+  height: 18px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  font-size: 10px;
+  font-style: normal;
+}
+
+.gc-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(24, 24, 30, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  animation: gcModalFade .35s ease both;
+}
+@keyframes gcModalFade { from { opacity: 0; } }
+.gc-modal-panel {
+  position: relative;
+  width: min(520px, 100%);
+  max-height: calc(100svh - 48px);
+  overflow-y: auto;
+  padding: clamp(28px, 4vw, 42px);
+  border-radius: 28px;
+  background: var(--paper, #FFF8EF);
+  color: var(--ink);
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.3);
+  animation: gcPanelIn .6s var(--ease) both;
+}
+@keyframes gcPanelIn { from { opacity: 0; transform: translateY(24px) scale(.97); } }
+
+.gc-modal-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: #fff;
+  cursor: pointer;
+  transition: background .3s ease, transform .5s var(--ease);
+}
+.gc-modal-close i::before,
+.gc-modal-close i::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 13px;
+  height: 1.5px;
+  background: var(--ink);
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+.gc-modal-close i::after { transform: translate(-50%, -50%) rotate(-45deg); }
+.gc-modal-close:hover { transform: rotate(90deg); background: var(--peach); }
+
+.gc-modal-title {
+  margin: 0;
+  padding-right: 40px;
+  font-family: var(--serif);
+  font-size: clamp(30px, 3.4vw, 40px);
+  font-weight: 400;
+  line-height: 1.04;
+  letter-spacing: -.04em;
+}
+.gc-modal-sub { margin: 12px 0 26px; color: var(--muted); font-size: 15px; line-height: 1.65; }
+.gc-modal-sub strong { color: var(--ink); font-weight: 600; }
+
+.gc-form { display: flex; flex-direction: column; }
+.gc-field { display: flex; flex-direction: column; gap: 8px; margin: 0 0 16px; padding: 0; border: 0; min-width: 0; }
+.gc-field > span,
+.gc-field legend {
+  padding: 0;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.gc-field legend { margin-bottom: 8px; }
+.gc-field input {
+  width: 100%;
+  height: 52px;
+  padding: 0 16px;
+  border: 1px solid rgba(36, 36, 43, 0.16);
+  border-radius: 14px;
+  background: #fff;
+  color: var(--ink);
+  font: 500 16px/1 var(--sans);
+  outline: none;
+  transition: border-color .25s ease, box-shadow .25s ease;
+}
+.gc-field input::placeholder { color: rgba(36, 36, 43, 0.35); font-weight: 400; }
+.gc-field input:focus { border-color: var(--coral); box-shadow: 0 0 0 4px rgba(250, 137, 77, 0.16); }
+.gc-field.has-error input { border-color: #D9534F; }
+.gc-field-error { color: #C2413D; font-size: 12.5px; font-style: normal; font-weight: 500; }
+
+.gc-options { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.gc-options button {
+  height: 46px;
+  padding: 0 10px;
+  border: 1px solid rgba(36, 36, 43, 0.16);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--ink);
+  font: 600 13.5px/1 var(--sans);
+  cursor: pointer;
+  transition: background .3s ease, color .3s ease, border-color .3s ease, transform .4s var(--ease);
+}
+.gc-options button:hover { border-color: var(--ink); }
+.gc-options button.is-on { background: var(--ink); border-color: var(--ink); color: #fff; transform: translateY(-1px); }
+.gc-field.has-error .gc-options button { border-color: rgba(217, 83, 79, 0.5); }
+
+.gc-trap { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+
+.gc-form-error {
+  margin: 0 0 14px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: rgba(217, 83, 79, 0.08);
+  color: #A93835;
+  font-size: 13.5px;
+}
+.gc-form .gc-btn-block { margin-top: 8px; }
+.gc-form .gc-btn[disabled] { opacity: .8; cursor: progress; transform: none; }
+.gc-spinner {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #fff;
+  animation: gcSpinner .8s linear infinite;
+}
+@keyframes gcSpinner { to { transform: rotate(360deg); } }
+.gc-form-note { margin: 14px 0 0; color: var(--subtle); font-size: 12px; text-align: center; }
+
+.gc-success { display: flex; flex-direction: column; align-items: flex-start; }
+.gc-success-mark { width: 64px; height: 64px; margin-bottom: 22px; }
+.gc-success-mark circle {
+  fill: none;
+  stroke: var(--coral);
+  stroke-width: 2.5;
+  stroke-dasharray: 190;
+  stroke-dashoffset: 190;
+  animation: gcDraw .9s var(--ease) .1s forwards;
+}
+.gc-success-mark path {
+  fill: none;
+  stroke: var(--coral);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 40;
+  stroke-dashoffset: 40;
+  animation: gcDraw .6s var(--ease) .7s forwards;
+}
+@keyframes gcDraw { to { stroke-dashoffset: 0; } }
+.gc-success .gc-btn { margin-top: 6px; }
+
+@media (max-width: 560px) {
+  .gc-modal { place-items: end center; padding: 0; }
+  .gc-modal-panel {
+    width: 100%;
+    max-height: 92svh;
+    border-radius: 26px 26px 0 0;
+    padding: 30px 22px calc(24px + env(safe-area-inset-bottom));
+    animation: gcSheetIn .6s var(--ease) both;
+  }
+  @keyframes gcSheetIn { from { transform: translateY(100%); } }
+  .gc-modal-close { top: 14px; right: 14px; }
+  .gc-options button { font-size: 12.5px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gc-success-mark circle, .gc-success-mark path { stroke-dashoffset: 0; }
+}

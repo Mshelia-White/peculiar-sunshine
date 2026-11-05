@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
+import WaitlistForm, { JOINED_KEY } from "./WaitlistForm";
 
 /* ==========================================================================
    LAUNCH SETTINGS — the only things to edit when details change
@@ -9,11 +10,6 @@ import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from 
 const LAUNCH_AT = "2026-11-07T15:00:00+01:00";
 const WHATSAPP = "2347066337370";
 const COURSE = "Learn to Create Flyers & Carousels Using AI";
-const WAITLIST_URL = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(
-  `Hi Peculiar! Please add me to the waitlist for “${COURSE}”.`,
-)}`;
-// Swap this for the payment/checkout link once it is ready.
-const ENROL_URL = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(`Hi Peculiar! I’d like to enrol in “${COURSE}”.`)}`;
 // Set to a price such as "₦25,000" to show it on the page.
 const PRICE: string | null = null;
 
@@ -96,7 +92,7 @@ const faqs = [
   },
   {
     q: "How do I join?",
-    a: "Enrolment opens when the countdown ends. Join the waitlist on WhatsApp now and you’ll be among the first to hear the launch price and get access.",
+    a: "Enrolment opens when the countdown ends. Join the waitlist with your name, email and phone number, and we’ll email you the launch price and access before anyone else.",
   },
 ];
 
@@ -104,6 +100,18 @@ const faqs = [
    HELPERS
    ========================================================================== */
 const launchTime = new Date(LAUNCH_AT).getTime();
+const launchLabel = new Intl.DateTimeFormat("en-GB", {
+  weekday: "long",
+  day: "numeric",
+  month: "long",
+  hour: "numeric",
+  minute: "2-digit",
+  hour12: true,
+  timeZone: "Africa/Lagos",
+}).format(new Date(LAUNCH_AT));
+
+// Lets any button on the page open the sign-up form.
+const FormContext = createContext<{ open: () => void; joined: boolean }>({ open: () => {}, joined: false });
 
 function useCountdown() {
   const [now, setNow] = useState<number | null>(null);
@@ -167,24 +175,15 @@ function CompactCount({ count }: { count: Count }) {
   );
 }
 
-function ChatIcon() {
-  return (
-    <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
-      <path
-        fill="currentColor"
-        d="M12 2.2a9.8 9.8 0 0 0-8.4 14.9L2.3 21.7l4.8-1.3A9.8 9.8 0 1 0 12 2.2Zm0 1.8a8 8 0 1 1-4.1 14.9l-.3-.2-2.8.8.8-2.7-.2-.3A8 8 0 0 1 12 4Zm-3.3 4c-.2 0-.5.1-.7.3-.3.3-.9.9-.9 2.1s.9 2.4 1 2.6c.1.2 1.8 2.8 4.4 3.8 2.2.9 2.6.7 3.1.7.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.4-.3-1.6-.8c-.2-.1-.4-.1-.5.1l-.7.9c-.1.2-.3.2-.5.1-.2-.1-1-.4-1.9-1.2-.7-.6-1.2-1.4-1.3-1.6-.1-.2 0-.4.1-.5l.4-.4.3-.4v-.4l-.7-1.8c-.2-.5-.4-.4-.5-.4h-.4Z"
-      />
-    </svg>
-  );
-}
-
 function CTA({ live, label, className = "" }: { live: boolean; label?: string; className?: string }) {
+  const { open, joined } = useContext(FormContext);
+  const text = joined && !live ? "You’re on the list" : label ?? (live ? "Enrol now" : "Join the waitlist");
   return (
-    <a className={`gc-btn gc-btn-primary ${className}`} href={live ? ENROL_URL : WAITLIST_URL} target="_blank" rel="noopener noreferrer">
-      <ChatIcon />
-      <span>{label ?? (live ? "Enrol now" : "Join the waitlist")}</span>
-      <b aria-hidden="true">↗</b>
-    </a>
+    <button type="button" className={`gc-btn gc-btn-primary ${joined && !live ? "is-joined " : ""}${className}`} onClick={open}>
+      {joined && !live && <i className="gc-check" aria-hidden="true">✓</i>}
+      <span>{text}</span>
+      {!(joined && !live) && <b aria-hidden="true">→</b>}
+    </button>
   );
 }
 
@@ -203,6 +202,16 @@ export default function CoursePage() {
   const count = useCountdown();
   const live = count.done;
   const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const [formOpen, setFormOpen] = useState(false);
+  const [joined, setJoined] = useState(false);
+  const openForm = useCallback(() => setFormOpen(true), []);
+  const closeForm = useCallback(() => setFormOpen(false), []);
+
+  useEffect(() => {
+    try {
+      if (window.localStorage.getItem(JOINED_KEY)) setJoined(true);
+    } catch {}
+  }, []);
   const [heroPassed, setHeroPassed] = useState(false);
   const [phase, setPhase] = useState(0);
   const heroRef = useRef<HTMLElement>(null);
@@ -279,6 +288,7 @@ export default function CoursePage() {
   }, []);
 
   return (
+    <FormContext.Provider value={{ open: openForm, joined }}>
     <div className="gc">
       <div className="gc-progress" aria-hidden="true" />
 
@@ -619,7 +629,7 @@ export default function CoursePage() {
             <Reveal className="gc-head">
               <p className="gc-eyebrow">Questions</p>
               <h2 className="gc-h2">Good to <em>know.</em></h2>
-              <p className="gc-sub">Something else on your mind? <a href={`https://wa.me/${WHATSAPP}`} target="_blank" rel="noopener noreferrer">Ask Peculiar on WhatsApp ↗</a></p>
+              <p className="gc-sub">Something else on your mind? <a href="https://www.instagram.com/pee_sunshine_" target="_blank" rel="noopener noreferrer">Message Peculiar on Instagram ↗</a></p>
             </Reveal>
             <div className="gc-faq">
               {faqs.map((faq, index) => {
@@ -676,6 +686,8 @@ export default function CoursePage() {
         </div>
         <CTA live={live} className="gc-btn-small" label={live ? "Enrol now" : "Join waitlist"} />
       </div>
+      <WaitlistForm open={formOpen} live={live} launchLabel={launchLabel} onClose={closeForm} onJoined={() => setJoined(true)} />
     </div>
+    </FormContext.Provider>
   );
 }

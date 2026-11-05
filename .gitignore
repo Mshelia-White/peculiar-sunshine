@@ -40,3 +40,6 @@ next-env.d.ts
 /.sites-runtime/
 /outputs/
 /work/
+
+# local waitlist test data (used only when no database is connected)
+/.data/
