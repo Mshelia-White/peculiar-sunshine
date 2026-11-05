@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 
 const navItems = [
   ["01", "home", "Intro"],
-  ["02", "overview", "Proof"],
-  ["03", "expertise", "Expertise"],
+  ["02", "brands", "Brands"],
+  ["03", "services", "Services"],
   ["04", "work", "Work"],
-  ["05", "method", "Method"],
+  ["05", "process", "Process"],
   ["06", "contact", "Contact"],
 ] as const;
 
@@ -28,146 +28,176 @@ const trustedBrands = [
   { name: "Genowax", logo: "/brands/genowax.png" },
 ];
 
-const metrics = [
-  { value: "586K+", label: "Subscriber ecosystem", note: "WSE public scale" },
-  { value: "1.8M", label: "Standout long-form views", note: "Public content anchor" },
-  { value: "1.1M", label: "Long-form performance", note: "Another standout upload" },
-  { value: "196K+", label: "Short-form views", note: "10K+ likes" },
+const marqueeSkills = [
+  "SOCIAL STRATEGY",
+  "AI VIDEO ADS",
+  "UGC CONTENT",
+  "GRAPHIC DESIGN",
+  "BRAND STRATEGY",
+  "CONTENT MARKETING",
+  "PRODUCT VISUALS",
+  "PAID ADS",
+  "COMMUNITY GROWTH",
+  "ANALYTICS",
 ];
 
-const services = [
-  {
-    number: "01",
-    title: "Social strategy & management",
-    text: "Clear channel plans, publishing systems and day-to-day management built around the business—not a posting quota.",
-    tag: "Presence",
-  },
-  {
-    number: "02",
-    title: "Content strategy & direction",
-    text: "Content pillars, campaign ideas, monthly plans, briefs and hooks that give creators a useful, consistent direction.",
-    tag: "Direction",
-  },
-  {
-    number: "03",
-    title: "Paid social & conversion",
-    text: "Meta campaigns planned for traffic, leads, enquiries and sales—with audience testing, budget control and performance optimisation.",
-    tag: "Action",
-  },
-  {
-    number: "04",
-    title: "Community & automation",
-    text: "Thoughtful audience care and automated chat journeys that answer questions, capture leads and keep conversations moving.",
-    tag: "Relationship",
-  },
-  {
-    number: "05",
-    title: "Analytics & reporting",
-    text: "Reach, engagement, clicks and cost-per-result translated into clear decisions for the next round of work.",
-    tag: "Learning",
-  },
-];
-
-const projects = [
+const brands = [
   {
     number: "01",
     name: "Winnie’s School of Excellence",
-    label: "Scale · Content Systems · Community",
+    label: "Education · Content systems",
     logo: "/brands/winnie school excellent.svg",
-    copy: "Managed and coordinated a high-volume content ecosystem, turning strategy into a reliable publishing system that strengthened audience engagement, expanded content reach, and kept a large learning community connected across platforms.",
-    metrics: [
-      ["586K+", "connected subscriber ecosystem"],
-      ["1.8M", "standout long-form views"],
-      ["196K+", "high-performing short-form views"],
-    ],
+    copy: "A high-volume content system that kept a large learning community engaged across platforms.",
+    metrics: [["586K+", "Subscribers"], ["1.8M", "Long-form"], ["196K+", "Short-form"]],
   },
   {
     number: "02",
     name: "OPK MagicalPad",
-    label: "Brand Building · Product Education · Sales",
+    label: "Health · Brand building",
     logo: "/brands/opk.png",
-    copy: "Built the Instagram presence from scratch, combining fertility education, product-focused storytelling, graphic design, and community management to earn customer trust, generate enquiries, and support sales within Nigeria and internationally.",
-    metrics: [
-      ["9K+", "Instagram brand community"],
-      ["₦50M+", "generated in product sales"],
-      ["≈250K", "estimated content reach"],
-    ],
+    copy: "Built the Instagram brand from zero—education, product storytelling and design that drove sales.",
+    metrics: [["9K+", "Community"], ["₦50M+", "Product sales"], ["≈250K", "Reach"]],
   },
   {
     number: "03",
     name: "Nova Tribe × Nova Missions",
-    label: "Audience Intelligence · Paid Growth · Conversion",
+    label: "Faith · Paid growth",
     logo: "/brands/nova-missions.PNG",
-    copy: "Developed audience-led content plans, community insights, and conversion-focused campaigns that expanded the brands’ visibility, reached new audiences, and moved people from discovery towards meaningful action.",
-    metrics: [
-      ["≈1.2M", "total audience reach"],
-      ["66.4K", "combined 30-day views"],
-      ["Paid", "conversion-led distribution"],
-    ],
+    copy: "Audience-led content and paid campaigns that widened reach and moved new people to act.",
+    metrics: [["≈1.2M", "Audience reach"], ["66.4K", "30-day views"], ["Paid", "Conversion"]],
   },
   {
     number: "04",
     name: "Coach AMARAK",
-    label: "Authority · Personal Brand · Audience Connection",
+    label: "Personal brand · Authority",
     logo: "/brands/amarak.PNG",
-    copy: "Translated her expertise as a leadership coach, mentor, author, and speaker into clear, relatable content that strengthened her professional authority, communicated her sessions effectively, and kept her audience consistently connected.",
-    metrics: [
-      ["3.4K+", "established brand community"],
-      ["Clear", "leadership sessions communicated"],
-      ["Daily", "consistent authority-led presence"],
-    ],
+    copy: "Turned a coach and author’s expertise into clear, relatable content that built real authority.",
+    metrics: [["3.4K+", "Community"], ["Daily", "Presence"], ["Clear", "Messaging"]],
   },
   {
     number: "05",
-    name: "KRD Autos & General Merchandise",
-    label: "Foundation · Positioning · Market Visibility",
+    name: "KRD Autos & Merchandise",
+    label: "Retail · Positioning",
     logo: "/brands/krd.png",
-    copy: "Created the strategic foundation for an emerging brand through clear positioning, social media strategy, content planning, and campaign direction designed to establish credibility and turn early audience attention into genuine enquiries.",
-    metrics: [
-      ["1.7K+", "content views in 30 days"],
-      ["16", "strategic content rollout"],
-      ["Direct", "enquiry-focused campaign direction"],
-    ],
+    copy: "Positioning and campaign direction that gave an emerging brand credibility and enquiries.",
+    metrics: [["1.7K+", "30-day views"], ["16", "Piece rollout"], ["Direct", "Enquiries"]],
   },
   {
     number: "06",
     name: "Agape Haven",
-    label: "Content Direction · Community · Visibility",
+    label: "Community · Content direction",
     logo: "/brands/agape-heaven.png",
-    copy: "Developed Agape Haven’s content direction and transformed church services, programmes, and community moments into consistent digital stories. Coordinated the content team, strengthened community engagement, and supported organic and paid growth initiatives.",
-    metrics: [
-      ["1.5K+", "organic views in 30 days"],
-      ["381+", "views on individual content"],
-      ["Growth", "organic & paid growth system"],
+    copy: "Turned services and community moments into consistent stories, with organic and paid growth.",
+    metrics: [["1.5K+", "Organic views"], ["381+", "Top post"], ["Growth", "Organic + paid"]],
+  },
+];
+
+const disciplines = [
+  {
+    number: "01",
+    tag: "Strategy",
+    title: "Social & content marketing",
+    text: "The plan behind the feed: what to say, where to say it, and how to turn attention into enquiries and sales.",
+    items: [
+      "Social media strategy & management",
+      "Content strategy & direction",
+      "Paid social & Meta ads",
+      "Community, automation & reporting",
+    ],
+  },
+  {
+    number: "02",
+    tag: "Video",
+    title: "AI video ads & UGC",
+    text: "Story-led video that stops the scroll and sells—produced with AI, without the cost of a full film crew.",
+    items: [
+      "AI video advertisements",
+      "UGC-style creator content",
+      "Product & brand films",
+      "Scripts, hooks & captions",
+    ],
+  },
+  {
+    number: "03",
+    tag: "Design",
+    title: "Graphic design & visuals",
+    text: "Premium visuals that make the offer impossible to miss—on every post, page, flyer and ad.",
+    items: [
+      "Product flyers & promotions",
+      "Campaign graphics & carousels",
+      "Product visuals",
+      "Brand-consistent templates",
     ],
   },
 ];
 
-const tools = ["Meta Ads Manager", "Meta Business Suite", "Google Sheets", "Canva", "ManyChat", "WhatsApp Business", "Platform Insights"];
+const film = {
+  title: "“Some days feel heavier.”",
+  copy: "A cinematic, story-led advert that meets people in an ordinary, heavy moment and turns it into a craving—every scene, caption and cut produced with AI.",
+  poster: "/work/videos/subway-ad-poster.jpg",
+  // Drop the exported MP4 here (e.g. "/work/videos/subway-ad.mp4") to play the film on the page.
+  video: "",
+  link: "https://docs.google.com/videos/d/17ta8mYe4Md-Z_ZfZ84XEBKFw_vx6jc9RJeGZDi-k6lQ/play?usp=sharing",
+  meta: [
+    ["Brand", "Subway"],
+    ["Format", "AI video advert"],
+    ["Runtime", "1:18"],
+    ["Recognition", "★ Award-winning"],
+  ],
+};
 
-const process = [
+const designs = [
+  { src: "/work/graphics/lushgreen-diffusers.webp", brand: "Lushgreen", tag: "Brand campaign" },
+  { src: "/work/graphics/everyday-handbag.webp", brand: "Pee Sunshine", tag: "Product flyer" },
+  { src: "/work/graphics/sami-casual.webp", brand: "Sami Casual", tag: "Fashion" },
+  { src: "/work/graphics/iced-coffee-concept.webp", brand: "Iced coffee", tag: "Concept ad" },
+  { src: "/work/graphics/ai-flyers-carousel.webp", brand: "Peculiar Sunshine", tag: "Carousel" },
+];
+
+const steps = [
   ["Outcome", "What does the business need to achieve?"],
   ["Audience", "Who needs to care—and what matters to them?"],
   ["Direction", "What should we say, show and prioritise?"],
-  ["Distribution", "Where should the audience meet it?"],
+  ["Creative", "Which video, design or post carries it best?"],
   ["Action", "What should happen next?"],
   ["Learning", "What did the performance teach us?"],
 ];
 
-const marqueeSkills = [
-  "SOCIAL STRATEGY",
-  "BRAND STRATEGY",
-  "CONTENT MARKETING",
-  "PAID ACQUISITION",
-  "COMMUNITY GROWTH",
-  "AUTOMATION",
-  "ANALYTICS",
+const tools = [
+  "Meta Ads Manager",
+  "Meta Business Suite",
+  "Canva",
+  "Google Vids",
+  "AI video & image tools",
+  "ManyChat",
+  "WhatsApp Business",
+  "Google Sheets",
 ];
+
+function SectionHead({ index, label, title, intro }: { index: string; label: string; title: ReactNode; intro?: string }) {
+  return (
+    <div className="sec-head" data-reveal>
+      <div className="sec-label">
+        <span>{index}</span>
+        <i />
+        <span>{label}</span>
+      </div>
+      <div className="sec-title">
+        <h2>{title}</h2>
+        {intro && <p>{intro}</p>}
+      </div>
+    </div>
+  );
+}
 
 export default function Home() {
   const [active, setActive] = useState("home");
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrollY, setScrollY] = useState(0);
+  const [lightbox, setLightbox] = useState<number | null>(null);
+  const [filmOpen, setFilmOpen] = useState(false);
+  const [cursorLabel, setCursorLabel] = useState<string | null>(null);
+  const filmRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const revealObserver = new IntersectionObserver(
@@ -176,53 +206,118 @@ export default function Home() {
           if (entry.isIntersecting) entry.target.classList.add("is-visible");
         });
       },
-      { threshold: 0.14 },
+      { threshold: 0.12 },
     );
+    document.querySelectorAll("[data-reveal]").forEach((element) => revealObserver.observe(element));
 
-    document.querySelectorAll("[data-reveal]").forEach((element) =>
-      revealObserver.observe(element),
-    );
-
+    // The section crossing the middle of the screen is the active one.
     const sectionObserver = new IntersectionObserver(
       (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-        if (visible?.target.id) setActive(visible.target.id);
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && entry.target.id) setActive(entry.target.id);
+        });
       },
-      { threshold: [0.2, 0.45, 0.7] },
+      { rootMargin: "-45% 0px -54% 0px", threshold: 0 },
     );
+    document.querySelectorAll("main section[id]").forEach((section) => sectionObserver.observe(section));
 
-    document.querySelectorAll("main section[id]").forEach((section) =>
-      sectionObserver.observe(section),
-    );
+    const root = document.documentElement;
+    const stackCards = Array.from(document.querySelectorAll<HTMLElement>("[data-stack]"));
+    let frame = 0;
 
-    const updatePointer = (event: PointerEvent) => {
-      document.documentElement.style.setProperty("--pointer-x", `${event.clientX}px`);
-      document.documentElement.style.setProperty("--pointer-y", `${event.clientY}px`);
-    };
+    const update = () => {
+      frame = 0;
+      const vh = window.innerHeight;
+      const max = root.scrollHeight - vh;
+      root.style.setProperty("--scroll-progress", String(max > 0 ? window.scrollY / max : 0));
 
-    const handleScroll = () => {
+      // Stacking cards: each card eases back slightly as the next one slides over it.
+      stackCards.forEach((card, index) => {
+        const next = stackCards[index + 1];
+        if (!next) return;
+        const overlap = 1 - Math.min(Math.max((next.getBoundingClientRect().top - card.getBoundingClientRect().top) / card.offsetHeight, 0), 1);
+        card.style.setProperty("--stack", overlap.toFixed(3));
+      });
+
+      // Featured film grows gently into place as it enters the screen.
+      const film = filmRef.current;
+      if (film) {
+        const top = film.getBoundingClientRect().top;
+        const progress = Math.min(Math.max((vh - top) / (vh * 0.7), 0), 1);
+        film.style.setProperty("--enter", progress.toFixed(3));
+      }
+
       setScrollY(window.scrollY);
     };
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
 
+    const updatePointer = (event: PointerEvent) => {
+      root.style.setProperty("--pointer-x", `${event.clientX}px`);
+      root.style.setProperty("--pointer-y", `${event.clientY}px`);
+    };
+    const updateCursor = (event: PointerEvent) => {
+      const target = (event.target as Element | null)?.closest?.("[data-cursor]");
+      setCursorLabel(target ? target.getAttribute("data-cursor") : null);
+    };
+
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
     window.addEventListener("pointermove", updatePointer, { passive: true });
-    window.addEventListener("scroll", handleScroll, { passive: true });
-
+    document.addEventListener("pointerover", updateCursor);
     return () => {
       revealObserver.disconnect();
       sectionObserver.disconnect();
+      if (frame) cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
       window.removeEventListener("pointermove", updatePointer);
-      window.removeEventListener("scroll", handleScroll);
+      document.removeEventListener("pointerover", updateCursor);
     };
   }, []);
 
+  useEffect(() => {
+    if (lightbox === null && !filmOpen) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setLightbox(null);
+        setFilmOpen(false);
+      }
+      if (lightbox === null) return;
+      if (event.key === "ArrowRight") setLightbox((i) => (i === null ? i : (i + 1) % designs.length));
+      if (event.key === "ArrowLeft") setLightbox((i) => (i === null ? i : (i - 1 + designs.length) % designs.length));
+    };
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [lightbox, filmOpen]);
+
   const closeMenu = () => setMenuOpen(false);
+  const openDesign = lightbox === null ? null : designs[lightbox];
+
+  const filmFrameInner = (
+    <>
+      <img src={film.poster} alt="Still from the Subway AI video advert: a woman standing on a busy bus" />
+      <span className="film-badge">★ Award-winning</span>
+      <span className="film-play" aria-hidden="true">
+        <i>▶</i>
+      </span>
+    </>
+  );
 
   return (
     <>
       <div className="pointer-light" aria-hidden="true" />
-      
+      <div className="scroll-progress" aria-hidden="true" />
+      <div className={cursorLabel ? "cursor-label is-on" : "cursor-label"} aria-hidden="true">
+        {cursorLabel}
+      </div>
+
       {/* HEADER */}
       <header className="site-header">
         <a className="wordmark" href="#home" onClick={closeMenu} aria-label="Peculiar Sunshine home">
@@ -238,8 +333,8 @@ export default function Home() {
           ))}
         </nav>
 
-        <a className="header-cta" href="#contact">Start a conversation <span>↗</span></a>
-        
+        <a className="header-cta" href="#contact">Start a project <span>↗</span></a>
+
         <button
           className="menu-button"
           type="button"
@@ -263,49 +358,48 @@ export default function Home() {
       </aside>
 
       <main>
-        {/* EDITORIAL HERO SECTION */}
+        {/* HERO */}
         <section className="hero-wrapper snap-section" id="home">
           <div className="hero-editorial-frame">
-            {/* Oversized Backdrop Word "GROWTH" */}
-            <div 
-              className="hero-backdrop-word" 
+            <div
+              className="hero-backdrop-word"
               aria-hidden="true"
               style={{ transform: `translateX(-50%) translateY(${Math.min(scrollY * 0.12, 50)}px)` }}
             >
               <span>GROWTH</span>
             </div>
 
-            {/* Central Portrait Integration */}
             <div className="hero-portrait-stage">
-              <div 
-                className="hero-portrait-container"
-                style={{ transform: `translateY(${Math.min(scrollY * 0.2, 80)}px)` }}
-              >
-                <img 
-                  src="/header.png" 
-                  alt="Peculiar Sunshine - Social Media & Brand Strategist | Content Marketing Specialist" 
+              <div className="hero-portrait-container" style={{ transform: `translateY(${Math.min(scrollY * 0.2, 80)}px)` }}>
+                <img
+                  src="/header-portrait.webp"
+                  alt="Peculiar Sunshine — Social Media & Brand Strategist, AI Video & UGC Creator and Graphic Designer"
                 />
               </div>
             </div>
 
-            {/* Middle Grid: Left Title Card & Copy | Center Spacer | Right Trust Area */}
             <div className="hero-mid-grid">
               <div className="hero-left-content">
-                {/* High-Contrast Core Expertise Title Card */}
-                <div className="hero-title-card" aria-label="Core Expertise">
-                  <span className="hero-title-badge">CORE EXPERTISE</span>
+                <div className="hero-title-card" aria-label="What I do">
+                  <span className="hero-title-badge">WHAT I DO</span>
                   <div className="hero-title-lines">
                     <span className="hero-title-line line-1">SOCIAL MEDIA &amp; BRAND STRATEGIST</span>
-                    <span className="hero-title-line line-2">CONTENT MARKETING SPECIALIST</span>
+                    <span className="hero-title-line line-2">AI VIDEO ADS &amp; UGC CREATOR</span>
+                    <span className="hero-title-line line-3">GRAPHIC DESIGNER</span>
                   </div>
                 </div>
 
                 <p className="hero-support-copy">
-                  Your audience is already online. I help you reach them with clear strategy, stronger content, and campaigns built to turn attention into action.
+                  Your audience is already online. I help brands reach them with clear strategy, scroll-stopping design and AI-powered video ads that turn attention into action.
                 </p>
-                <a className="hero-cta-btn" href="#work">
-                  SEE THE RESULTS <span>↗</span>
-                </a>
+                <div className="hero-cta-row">
+                  <a className="hero-cta-btn" href="#brands">
+                    SEE THE RESULTS <span>↗</span>
+                  </a>
+                  <a className="hero-award-chip" href="#featured-film">
+                    <i aria-hidden="true">▶</i> Watch the award-winning ad
+                  </a>
+                </div>
               </div>
 
               <div className="hero-center-spacer" aria-hidden="true" />
@@ -322,7 +416,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Translucent Glass Results Panel at the Bottom */}
             <div className="hero-glass-results" aria-label="Verified Performance Metrics">
               <div className="hero-results-grid">
                 {heroResults.map((result) => (
@@ -336,8 +429,8 @@ export default function Home() {
           </div>
         </section>
 
-        {/* CONTINUOUS HORIZONTAL POST-HERO MARQUEE */}
-        <section className="post-hero-marquee" aria-label="Core Capabilities Marquee">
+        {/* MARQUEE */}
+        <section className="post-hero-marquee" aria-label="Core capabilities">
           <div className="marquee-track">
             {[0, 1, 2, 3].map((repeatIndex) => (
               <div className="marquee-chunk" key={repeatIndex} aria-hidden={repeatIndex > 0 || undefined}>
@@ -351,159 +444,258 @@ export default function Home() {
           </div>
         </section>
 
-        {/* OVERVIEW / PROOF SECTION */}
-        <section className="overview snap-section" id="overview">
-          <div className="section-heading" data-reveal>
-            <p className="eyebrow dark">A practical record of growth</p>
-            <h2>Growing visibility<br /><em>and turning attention into action.</em></h2>
-          </div>
-
-          <div className="overview-copy" data-reveal>
-            <p>
-              For the past three years, I’ve helped businesses and personal brands strengthen their digital presence, connect with the right audiences, and turn online visibility into measurable business growth.
+        {/* 01 — BRANDS */}
+        <section className="section light" id="brands">
+          <div className="container">
+            <SectionHead
+              index="01"
+              label="Brands I’ve managed"
+              title={<>Brands I’ve<br /><em>helped grow.</em></>}
+              intro="Six partnerships across education, health, faith, retail and personal brands—measured in reach, community and sales."
+            />
+            <div className="brand-grid">
+              {brands.map((brand, index) => (
+                <article
+                  className="brand-card"
+                  key={brand.name}
+                  data-reveal
+                  style={{ "--delay": `${(index % 3) * 80}ms` } as React.CSSProperties}
+                >
+                  <div className="brand-top">
+                    <span className="brand-logo">
+                      <img src={brand.logo} alt={`${brand.name} logo`} loading="lazy" />
+                    </span>
+                    <span className="brand-number">{brand.number}</span>
+                  </div>
+                  <p className="brand-label">{brand.label}</p>
+                  <h3>{brand.name}</h3>
+                  <p className="brand-copy">{brand.copy}</p>
+                  <div className="brand-metrics">
+                    {brand.metrics.map(([value, label]) => (
+                      <div key={label}>
+                        <strong>{value}</strong>
+                        <span>{label}</span>
+                      </div>
+                    ))}
+                  </div>
+                </article>
+              ))}
+            </div>
+            <p className="integrity-note">
+              Public channel-level figures are shown as scale context. Individual attribution is limited to work connected to Peculiar’s documented management and execution periods.
             </p>
-            <p>
-              I bring brand strategy, social media, content marketing, and paid campaigns together—so every move has purpose, every campaign reaches the right people, and every result drives the next stage of growth.
-            </p>
-          </div>
-
-          <div className="metrics-grid">
-            {metrics.map((metric, index) => (
-              <article className="metric" data-reveal key={metric.label} style={{ "--delay": `${index * 80}ms` } as React.CSSProperties}>
-                <span className="metric-index">0{index + 1}</span>
-                <strong>{metric.value}</strong>
-                <h3>{metric.label}</h3>
-                <p>{metric.note}</p>
-              </article>
-            ))}
-          </div>
-
-          <div className="overview-note" data-reveal>
-            <span className="note-line" />
-            <p>The goal is not simply to be seen. It is to help the right people take the next step.</p>
           </div>
         </section>
 
-        {/* EXPERTISE SECTION */}
-        <section className="expertise snap-section" id="expertise">
-          <div className="expertise-intro">
-            <div className="sticky-heading" data-reveal>
-              <p className="eyebrow">Where I add value</p>
-              <h2>Strategy<br />behind the <em>feed.</em></h2>
-              <p className="expertise-lead">I create the direction, systems and campaigns that help better content do meaningful work.</p>
-              <span className="expertise-count">05 disciplines</span>
+        {/* 02 — SERVICES (scroll-and-stack) */}
+        <section className="section green" id="services">
+          <div className="container">
+            <SectionHead
+              index="02"
+              label="What I do"
+              title={<>Strategy, design<br /><em>and video.</em></>}
+              intro="One partner for the plan, the visuals and the ads—so every piece works together and every post has a job to do."
+            />
+            <div className="stack">
+              {disciplines.map((discipline, index) => (
+                <article
+                  className={`stack-card tone-${index + 1}`}
+                  key={discipline.number}
+                  data-stack
+                  style={{ "--i": index } as React.CSSProperties}
+                >
+                  <div className="stack-main">
+                    <div className="stack-top">
+                      <span>{discipline.number}</span>
+                      <span>{discipline.tag}</span>
+                    </div>
+                    <h3>{discipline.title}</h3>
+                    <p>{discipline.text}</p>
+                  </div>
+                  <ul>
+                    {discipline.items.map((item) => (
+                      <li key={item}>
+                        <span>{item}</span>
+                        <i aria-hidden="true">↗</i>
+                      </li>
+                    ))}
+                  </ul>
+                </article>
+              ))}
             </div>
-          </div>
-          <div className="service-list">
-            {services.map((service) => (
-              <article className="service-row" key={service.number} data-reveal>
-                <div className="service-topline">
-                  <span>{service.number}</span>
-                  <span>{service.tag}</span>
-                </div>
-                <h3>{service.title}</h3>
-                <p>{service.text}</p>
-                <i aria-hidden="true">↗</i>
-              </article>
-            ))}
           </div>
         </section>
 
-        {/* WORK SECTION */}
-        <section className="work snap-section" id="work">
-          <div className="work-heading" data-reveal>
-            <div>
-              <p className="eyebrow dark">Selected work</p>
-              <h2>The work,<br /><em>in context.</em></h2>
-            </div>
-            <p>Different stages need different answers. These projects show scale, consistency, acquisition, sales, and community building.</p>
-          </div>
+        {/* 03 — WORK */}
+        <section className="section dark" id="work">
+          <div className="container">
+            <SectionHead
+              index="03"
+              label="Selected work"
+              title={<>Made to stop<br /><em>the scroll.</em></>}
+              intro="A featured AI film and a curated set of campaign designs, each built around one clear action."
+            />
 
-          <div className="project-stack">
-            {projects.map((project, index) => (
-              <article className={`project-card project-${index + 1}`} key={project.name}>
-                <div className="project-main">
-                  <div className="project-number">{project.number}</div>
-                  <div className="project-logo-wrap">
-                    <img src={project.logo} alt={`${project.name} logo`} />
-                  </div>
-                  <div className="project-copy">
-                    <p className="project-label">{project.label}</p>
-                    <h3>{project.name}</h3>
-                    <p>{project.copy}</p>
-                  </div>
-                </div>
-                <div className="project-metrics">
-                  {project.metrics.map(([value, label]) => (
-                    <div key={label + value}><strong>{value}</strong><span>{label}</span></div>
+            <div className="film" id="featured-film" ref={filmRef}>
+              {film.video ? (
+                <button type="button" className="film-frame" data-cursor="Play" onClick={() => setFilmOpen(true)} aria-label="Play the Subway AI video advert">
+                  {filmFrameInner}
+                </button>
+              ) : (
+                <a className="film-frame" data-cursor="Play" href={film.link} target="_blank" rel="noopener noreferrer" aria-label="Watch the Subway AI video advert">
+                  {filmFrameInner}
+                </a>
+              )}
+
+              <div className="film-info" data-reveal>
+                <p className="film-kicker">Featured film</p>
+                <h3>{film.title}</h3>
+                <p className="film-text">{film.copy}</p>
+                <dl className="film-meta">
+                  {film.meta.map(([term, value]) => (
+                    <div key={term}>
+                      <dt>{term}</dt>
+                      <dd className={term === "Recognition" ? "accent" : undefined}>{value}</dd>
+                    </div>
                   ))}
-                </div>
-              </article>
-            ))}
-          </div>
-
-          <p className="integrity-note">Public channel-level figures are shown as scale context. Individual attribution is limited to work connected to Peculiar’s documented management and execution periods.</p>
-        </section>
-
-        {/* METHOD SECTION */}
-        <section className="method snap-section" id="method">
-          <div className="method-header" data-reveal>
-            <p className="eyebrow">A practical way of working</p>
-            <h2>Before the post,<br /><em>there’s a question.</em></h2>
-          </div>
-
-          <div className="process-list">
-            {process.map(([name, question], index) => (
-              <article key={name} data-reveal>
-                <span>0{index + 1}</span>
-                <h3>{name}</h3>
-                <p>{question}</p>
-              </article>
-            ))}
-          </div>
-
-          <div className="tools-block" data-reveal>
-            <div className="tools-copy">
-              <p className="eyebrow">Working toolkit</p>
-              <h3>Organised enough to run. Flexible enough to improve.</h3>
-              <p>Planning, paid media, reporting and automation brought into one clear operating rhythm.</p>
+                </dl>
+                {film.video ? (
+                  <button type="button" className="film-link" onClick={() => setFilmOpen(true)}>Play the film <span>▶</span></button>
+                ) : (
+                  <a className="film-link" href={film.link} target="_blank" rel="noopener noreferrer">Watch the full film <span>↗</span></a>
+                )}
+              </div>
             </div>
-            <div className="tool-grid">
-              {tools.map((tool, index) => <span key={tool}><i>0{index + 1}</i>{tool}</span>)}
-            </div>
-          </div>
 
-          <div className="skill-line" aria-label="Core skills">
-            <div>
-              <span>Social strategy</span><b>◆</b><span>Brand strategy</span><b>◆</b><span>Content marketing</span><b>◆</b><span>Paid acquisition</span><b>◆</b><span>Automation</span><b>◆</b><span>Analytics</span><b>◆</b>
+            <div className="design-head" data-reveal>
+              <h3>Campaign design</h3>
+              <span>Select to enlarge</span>
             </div>
-            <div aria-hidden="true">
-              <span>Social strategy</span><b>◆</b><span>Brand strategy</span><b>◆</b><span>Content marketing</span><b>◆</b><span>Paid acquisition</span><b>◆</b><span>Automation</span><b>◆</b><span>Analytics</span><b>◆</b>
+            <div className="design-row">
+              {designs.map((design, index) => (
+                <button
+                  type="button"
+                  key={design.src}
+                  className="design-item"
+                  data-cursor="View"
+                  onClick={() => setLightbox(index)}
+                  data-reveal
+                  style={{ "--delay": `${index * 70}ms` } as React.CSSProperties}
+                >
+                  <span className="mat">
+                    <img src={design.src} alt={`${design.brand} — ${design.tag}`} loading="lazy" />
+                  </span>
+                  <span className="design-cap">
+                    <b>{design.brand}</b>
+                    <i>{design.tag}</i>
+                  </span>
+                </button>
+              ))}
             </div>
           </div>
         </section>
 
-        {/* CONTACT SECTION */}
-        <section className="contact snap-section" id="contact">
-          <div className="contact-top" data-reveal>
-            <p className="eyebrow">Available worldwide</p>
-            <span>06 / Let’s talk</span>
-          </div>
-          <div className="contact-main">
-            <h2 data-reveal>Your brand has<br />somewhere to go.</h2>
-            <div className="contact-side" data-reveal>
-              <p>If you need clear social strategy, stronger content direction, conversion-focused ads or smarter automation, let’s talk about the next move.</p>
-              <a className="contact-email" href="mailto:Peculiarsunshine12@gmail.com">Peculiarsunshine12@gmail.com <span>↗</span></a>
-              <a className="contact-phone" href="tel:+2347066337370">070 6633 7370</a>
+        {/* 04 — PROCESS */}
+        <section className="section light" id="process">
+          <div className="container">
+            <SectionHead
+              index="04"
+              label="How I work"
+              title={<>Before the post,<br /><em>there’s a question.</em></>}
+              intro="A simple, repeatable way of working—so every post, video and design has a clear reason to exist."
+            />
+            <div className="steps">
+              {steps.map(([name, question], index) => (
+                <article className="step" key={name} data-reveal style={{ "--delay": `${(index % 3) * 80}ms` } as React.CSSProperties}>
+                  <span>0{index + 1}</span>
+                  <h3>{name}</h3>
+                  <p>{question}</p>
+                </article>
+              ))}
+            </div>
+            <div className="toolkit" data-reveal>
+              <span>Toolkit</span>
+              <ul>
+                {tools.map((tool) => (
+                  <li key={tool}>{tool}</li>
+                ))}
+              </ul>
             </div>
           </div>
-          <div className="contact-footer">
-            <div className="footer-mark"><span>PS</span><p>Peculiar Sunshine<br /><small>Social Media &amp; Brand Strategist · Content Marketing Specialist</small></p></div>
-            <div className="footer-status"><i /> Open to full-time, contract and consulting work</div>
-            <a href="#home">Back to top ↑</a>
+        </section>
+
+        {/* 05 — CONTACT */}
+        <section className="section dark contact" id="contact">
+          <div className="container">
+            <div className="sec-label" data-reveal>
+              <span>05</span>
+              <i />
+              <span>Let’s talk · Available worldwide</span>
+            </div>
+            <div className="contact-grid">
+              <h2 data-reveal>Your brand has<br /><em>somewhere to go.</em></h2>
+              <div className="contact-side" data-reveal>
+                <p>Need a clear social strategy, an AI video ad, UGC content, standout graphics or campaigns that convert? Let’s talk about the next move.</p>
+                <a className="contact-email" href="mailto:Peculiarsunshine12@gmail.com">
+                  Peculiarsunshine12@gmail.com <span>↗</span>
+                </a>
+                <a className="contact-phone" href="tel:+2347066337370">070 6633 7370</a>
+              </div>
+            </div>
+            <footer className="site-footer">
+              <div className="footer-mark">
+                <span>PS</span>
+                <p>
+                  Peculiar Sunshine
+                  <br />
+                  <small>Social Media &amp; Brand Strategist · AI Video &amp; UGC Creator · Graphic Designer</small>
+                </p>
+              </div>
+              <div className="footer-status"><i /> Open to projects, retainers, contract &amp; full-time work</div>
+              <a href="#home">Back to top ↑</a>
+            </footer>
           </div>
         </section>
       </main>
+
+      {/* DESIGN LIGHTBOX */}
+      {openDesign && lightbox !== null && (
+        <div className="lightbox" role="dialog" aria-modal="true" aria-label={openDesign.brand} onClick={() => setLightbox(null)}>
+          <figure onClick={(event) => event.stopPropagation()}>
+            <img src={openDesign.src} alt={`${openDesign.brand} — ${openDesign.tag}`} />
+            <figcaption>
+              <i>{openDesign.tag}</i>
+              <b>{openDesign.brand}</b>
+              <span>{lightbox + 1} / {designs.length}</span>
+            </figcaption>
+          </figure>
+          <button type="button" className="lightbox-close" aria-label="Close" onClick={() => setLightbox(null)}>×</button>
+          <button
+            type="button"
+            className="lightbox-nav prev"
+            aria-label="Previous design"
+            onClick={(event) => { event.stopPropagation(); setLightbox((lightbox - 1 + designs.length) % designs.length); }}
+          >
+            ←
+          </button>
+          <button
+            type="button"
+            className="lightbox-nav next"
+            aria-label="Next design"
+            onClick={(event) => { event.stopPropagation(); setLightbox((lightbox + 1) % designs.length); }}
+          >
+            →
+          </button>
+        </div>
+      )}
+
+      {/* FILM PLAYER (used once the MP4 is added) */}
+      {filmOpen && film.video && (
+        <div className="lightbox" role="dialog" aria-modal="true" aria-label="Subway AI video advert" onClick={() => setFilmOpen(false)}>
+          <video className="film-player" src={film.video} poster={film.poster} controls autoPlay playsInline onClick={(event) => event.stopPropagation()} />
+          <button type="button" className="lightbox-close" aria-label="Close" onClick={() => setFilmOpen(false)}>×</button>
+        </div>
+      )}
     </>
   );
 }

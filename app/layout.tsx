@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Peculiar Sunshine Portfolio",
-  description: "Social media strategy, content direction, paid advertising and growth by Peculiar Sunshine.",
+  title: "Peculiar Sunshine — Social Media Strategist, AI Video & UGC Creator, Graphic Designer",
+  description: "Peculiar Sunshine helps brands grow with social media strategy, content marketing, AI video ads, UGC content and scroll-stopping graphic design.",
   other: {
     "codex-preview": "development",
   },
